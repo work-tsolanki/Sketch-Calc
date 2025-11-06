@@ -1,6 +1,7 @@
-# app_ai
+# Sketch Calc
 
-A new Flutter project.
+A Sketch/Doodle themed Calculator
+--UNDER PROGRESS--
 
 ## Getting Started
 
