@@ -89,13 +89,14 @@ class _MyAppState extends State<MyApp> {
                       // color: Colors.grey[300],
                       height: 300,
                       child: Card(
+                        color: Colors.black,
                         child: Stack(
                           children: [
-                            Image.asset(
-                            'c_icon/placeholder.png',
-                              fit: BoxFit.fill,
-                              height: double.infinity,
-                            ),
+                            // Image.asset(
+                            // 'c_icon/placeholder.png',
+                            //   fit: BoxFit.fill,
+                            //   height: double.infinity,
+                            // ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
@@ -145,6 +146,11 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                   ],
+                ),
+                const Divider(
+                  color: Colors.grey,
+                  indent: 40,
+                  endIndent: 40,
                 ),
                 Column(
                   children: [
