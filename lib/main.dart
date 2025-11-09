@@ -86,6 +86,7 @@ class _MyAppState extends State<MyApp> {
       }
     }
     calc = '';
+    tempnum = '';
     setState(() => calc += numbers[0].toString());
   }
 
