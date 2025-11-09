@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       _isButtonEnabled = newValue;
   }
 
-  // Adds every number to list
+  // Adds every number & arithmetic operators to list
   void operatorPressed(String operator){
       if (operator.isNotEmpty || tempnum.isNotEmpty) {
         if (operator.isNotEmpty && tempnum.isNotEmpty){
@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
       _toggleButtonState(false);
   }
 
-  void equalsTo(){
+  void equalsTo() {
 
     late double checkResult;
     if (tempnum.isNotEmpty) {
@@ -85,11 +85,8 @@ class _MyAppState extends State<MyApp> {
         numbers.insert(idx, checkResult);
       }
     }
-    setState(() {
-      calc = '';
-      calc += numbers[0].toString();
-    });
-
+    calc = '';
+    setState(() => calc += numbers[0].toString());
   }
 
   @override
@@ -319,11 +316,9 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ),
                             onPressed: (){
-                              setState(() {
                                 tempnum+='7';
-                                calc += '7';
+                                setState(() => calc += '7');
                                 _toggleButtonState(true);
-                              });
                             },
                             child: SizedBox(
                               // color: Colors.blue[100],
@@ -347,11 +342,9 @@ class _MyAppState extends State<MyApp> {
                                 ),
                               ),
                               onPressed: (){
-                                setState(() {
                                   tempnum+='8';
-                                  calc += '8';
+                                  setState(() => calc += '8');
                                   _toggleButtonState(true);
-                                });
                               },
                               child: SizedBox(
                                 // color: Colors.blue[100],
@@ -375,11 +368,9 @@ class _MyAppState extends State<MyApp> {
                                 ),
                               ),
                               onPressed: (){
-                                setState(() {
                                   tempnum+='9';
-                                  calc += '9';
+                                  setState(() => calc += '9');
                                   _toggleButtonState(true);
-                                });
                               },
                               child: SizedBox(
                                 // color: Colors.blue[100],
@@ -445,11 +436,9 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ),
                             onPressed: (){
-                              setState(() {
                                 tempnum+='4';
-                                calc += '4';
+                                setState(() => calc += '4');
                                 _toggleButtonState(true);
-                              });
                             },
                             child: SizedBox(
                               // color: Colors.blue[100],
@@ -473,11 +462,9 @@ class _MyAppState extends State<MyApp> {
                                 ),
                               ),
                               onPressed: (){
-                                setState(() {
                                   tempnum+='5';
-                                  calc += '5';
+                                  setState(() => calc += '5');
                                   _toggleButtonState(true);
-                                });
                               },
                               child: SizedBox(
                                 // color: Colors.blue[100],
@@ -501,11 +488,9 @@ class _MyAppState extends State<MyApp> {
                                 ),
                               ),
                               onPressed: (){
-                                setState(() {
                                   tempnum+='6';
-                                  calc += '6';
+                                  setState(() => calc += '6');
                                   _toggleButtonState(true);
-                                });
                               },
                               child: SizedBox(
                                 // color: Colors.blue[100],
@@ -571,11 +556,9 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ),
                             onPressed: (){
-                              setState(() {
                                 tempnum+='1';
-                                calc += '1';
+                                setState(() => calc += '1');
                                 _toggleButtonState(true);
-                              });
                             },
                             child: SizedBox(
                               // color: Colors.blue[100],
@@ -599,11 +582,9 @@ class _MyAppState extends State<MyApp> {
                                 ),
                               ),
                               onPressed: (){
-                                setState(() {
                                   tempnum+='2';
-                                  calc += '2';
+                                  setState(() => calc += '2');
                                   _toggleButtonState(true);
-                                });
                                 },
                               child: SizedBox(
                                 // color: Colors.blue[100],
@@ -627,11 +608,9 @@ class _MyAppState extends State<MyApp> {
                                 ),
                               ),
                               onPressed: (){
-                                setState(() {
                                   tempnum+='3';
-                                  calc += '3';
+                                  setState(() => calc += '3');
                                   _toggleButtonState(true);
-                                });
                                 },
                               child: SizedBox(
                                 // color: Colors.blue[100],
@@ -662,11 +641,9 @@ class _MyAppState extends State<MyApp> {
                                 else if (!_isButtonEnabled){
                                   if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op))) {
                                     arithmetic.removeLast();
-                                    setState(() {
                                       calc = calc.substring(0, calc.length - 1);
                                       arithmetic.add('+');
-                                      calc += '+';
-                                    });
+                                      setState(() => calc += '+');
                                   }
                                 }
                             },
