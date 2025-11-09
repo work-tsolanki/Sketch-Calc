@@ -18,15 +18,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  List<BigInt> numbers = [];
+  List<double> numbers = [];
   List<String> arithmetic = [];
   late var tempnum = '';
   late var calc = '';
   double result = 0;
-  // dynamic _operator = '';
   bool _isButtonEnabled = false;
-
-  final ScrollController _scrollController = ScrollController();
 
   void _toggleButtonState(bool newValue){
       _isButtonEnabled = newValue;
@@ -37,14 +34,14 @@ class _MyAppState extends State<MyApp> {
       if (operator.isNotEmpty || tempnum.isNotEmpty) {
         if (operator.isNotEmpty && tempnum.isNotEmpty){
           arithmetic.add(operator);
-          numbers.add(BigInt.parse(tempnum));
+          numbers.add(double.parse(tempnum));
           tempnum = '';
         }
         else if (operator.isNotEmpty) {
           arithmetic.add(operator);
         }
         else if (tempnum.isNotEmpty) {
-          numbers.add(BigInt.parse(tempnum));
+          numbers.add(double.parse(tempnum));
           tempnum = '';
         }
       }
@@ -53,15 +50,15 @@ class _MyAppState extends State<MyApp> {
 
   void equalsTo(){
 
-    late BigInt checkResult;
+    late double checkResult;
     if (tempnum.isNotEmpty) {
-      numbers.add(BigInt.parse(tempnum));
+      numbers.add(double.parse(tempnum));
     }
 
     while (numbers.length > 1){
       if (arithmetic.contains('/')){
         int idx = arithmetic.indexOf('/');
-        checkResult = (numbers[idx] / numbers[idx+1]) as BigInt;
+        checkResult = numbers[idx] / numbers[idx+1];
         arithmetic.remove('/');
         numbers.removeRange(idx, idx+2);
         numbers.insert(idx, checkResult);
@@ -112,11 +109,6 @@ class _MyAppState extends State<MyApp> {
                         color: Colors.black,
                         child: Stack(
                           children: [
-                            // Image.asset(
-                            // 'c_icon/placeholder.png',
-                            //   fit: BoxFit.fill,
-                            //   height: BigInt.infinity,
-                            // ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
@@ -148,8 +140,7 @@ class _MyAppState extends State<MyApp> {
                               alignment: Alignment.bottomRight,
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                controller: _scrollController,
-                                reverse: false,
+                                reverse: true,
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 12.0, bottom: 6.0),
                                   child: Text(
