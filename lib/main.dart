@@ -18,61 +18,81 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  List<double> nums = [];
+  List<BigInt> numbers = [];
+  List<String> arithmetic = [];
   late var tempnum = '';
   late var calc = '';
   double result = 0;
-  dynamic _operator = '';
+  // dynamic _operator = '';
+  bool _isButtonEnabled = false;
+
+  final ScrollController _scrollController = ScrollController();
+
+  void _toggleButtonState(bool newValue){
+      _isButtonEnabled = newValue;
+  }
 
   // Adds every number to list
-  void operatorPressed(){
-      nums.add(double.parse(tempnum));
-      tempnum = '';
-    // print(tempnum);
+  void operatorPressed(String operator){
+      if (operator.isNotEmpty || tempnum.isNotEmpty) {
+        if (operator.isNotEmpty && tempnum.isNotEmpty){
+          arithmetic.add(operator);
+          numbers.add(BigInt.parse(tempnum));
+          tempnum = '';
+        }
+        else if (operator.isNotEmpty) {
+          arithmetic.add(operator);
+        }
+        else if (tempnum.isNotEmpty) {
+          numbers.add(BigInt.parse(tempnum));
+          tempnum = '';
+        }
+      }
+      _toggleButtonState(false);
   }
 
-  // Plus Function
-  void calculatePlus(){
-    setState(() {
-      nums.add(double.parse(tempnum));
-      result = nums[0] + nums[1];
-      nums.clear();
-      tempnum = result.toString();
-      calc = result.toString();
-    });
-  }
+  void equalsTo(){
 
-  // Minus Function
-  void calculateMinus(){
-    setState(() {
-    nums.add(double.parse(tempnum));
-    result = nums[0] - nums[1];
-      nums.clear();
-      tempnum = result.toString();
-      calc = result.toString();
-    });
-  }
+    late BigInt checkResult;
+    if (tempnum.isNotEmpty) {
+      numbers.add(BigInt.parse(tempnum));
+    }
 
-  // Multiply Function
-  void calculateMultiply(){
+    while (numbers.length > 1){
+      if (arithmetic.contains('/')){
+        int idx = arithmetic.indexOf('/');
+        checkResult = (numbers[idx] / numbers[idx+1]) as BigInt;
+        arithmetic.remove('/');
+        numbers.removeRange(idx, idx+2);
+        numbers.insert(idx, checkResult);
+      }
+      else if (arithmetic.contains('*')){
+        int idx = arithmetic.indexOf('*');
+        checkResult = numbers[idx] * numbers[idx+1];
+        arithmetic.remove('*');
+        numbers.removeRange(idx, idx+2);
+        numbers.insert(idx, checkResult);
+      }
+      else if (arithmetic.contains('+')){
+        int idx = arithmetic.indexOf('+');
+        checkResult = numbers[idx] + numbers[idx+1];
+        arithmetic.remove('+');
+        numbers.removeRange(idx, idx+2);
+        numbers.insert(idx, checkResult);
+      }
+      else if (arithmetic.contains('-')){
+        int idx = arithmetic.indexOf('-');
+        checkResult = numbers[idx] - numbers[idx+1];
+        arithmetic.remove('-');
+        numbers.removeRange(idx, idx+2);
+        numbers.insert(idx, checkResult);
+      }
+    }
     setState(() {
-      nums.add(double.parse(tempnum));
-      result = nums[0] * nums[1];
-      nums.clear();
-      tempnum = result.toString();
-      calc = result.toString();
+      calc = '';
+      calc += numbers[0].toString();
     });
-  }
 
-  // Divide Function
-  void calculateDivide(){
-    setState(() {
-      nums.add(double.parse(tempnum));
-      result = nums[0] / nums[1];
-      nums.clear();
-      tempnum = result.toString();
-      calc = result.toString();
-    });
   }
 
   @override
@@ -95,7 +115,7 @@ class _MyAppState extends State<MyApp> {
                             // Image.asset(
                             // 'c_icon/placeholder.png',
                             //   fit: BoxFit.fill,
-                            //   height: double.infinity,
+                            //   height: BigInt.infinity,
                             // ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -128,6 +148,8 @@ class _MyAppState extends State<MyApp> {
                               alignment: Alignment.bottomRight,
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
+                                controller: _scrollController,
+                                reverse: false,
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 12.0, bottom: 6.0),
                                   child: Text(
@@ -167,7 +189,8 @@ class _MyAppState extends State<MyApp> {
                             ),
                             onPressed: (){
                               setState(() {
-                                nums.clear();
+                                numbers.clear();
+                                arithmetic.clear();
                                 tempnum = '';
                                 calc = '';
                                 result = 0;
@@ -217,14 +240,25 @@ class _MyAppState extends State<MyApp> {
                                   EdgeInsets.all(0),
                                 ),
                               ),
-                              onPressed: (){
+                              onPressed: () {
                                 // print(_operator);
                                 setState(() {
-                                  if (calc.isNotEmpty) {
-                                    calc = calc.substring(0, calc.length - 1);
-                                  }
-                                  if (tempnum.isNotEmpty) {
-                                    tempnum = tempnum.substring(0, tempnum.length - 1);
+                                  if (calc.isNotEmpty || tempnum.isNotEmpty) {
+                                    if (calc.isNotEmpty && tempnum.isNotEmpty){
+                                      calc = calc.substring(0, calc.length - 1);
+                                      // print(calc.length-1);
+                                      tempnum = tempnum.substring(0, tempnum.length - 1);
+                                    }
+                                    else if (calc.isNotEmpty) {
+                                      if (RegExp(r'[+-/*]').hasMatch(calc.substring(calc.length-1))){
+                                        arithmetic.removeLast();
+                                      }
+                                        calc = calc.substring(0, calc.length - 1);
+                                      _toggleButtonState(true);
+                                    }
+                                    else if(tempnum.isNotEmpty) {
+                                      tempnum = tempnum.substring(0, tempnum.length - 1);
+                                    }
                                   }
                                 });
                                 // print(_operator);
@@ -252,13 +286,20 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ),
                             onPressed: (){
-                              setState(() {
-                                if (tempnum.isNotEmpty) {
-                                  operatorPressed();
+                                if (_isButtonEnabled){
+                                  operatorPressed('/');
+                                  setState(() => calc += '/');
                                 }
-                                _operator = '/';
-                                calc += '/';
-                              });
+                                else if (!_isButtonEnabled){
+                                  if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op))) {
+                                    arithmetic.removeLast();
+                                    setState(() {
+                                      calc = calc.substring(0, calc.length - 1);
+                                      arithmetic.add('/');
+                                      calc += '/';
+                                    });
+                                  }
+                                }
                             },
                             child: SizedBox(
                               // color: Colors.deepPurple[200],
@@ -290,6 +331,7 @@ class _MyAppState extends State<MyApp> {
                               setState(() {
                                 tempnum+='7';
                                 calc += '7';
+                                _toggleButtonState(true);
                               });
                             },
                             child: SizedBox(
@@ -317,6 +359,7 @@ class _MyAppState extends State<MyApp> {
                                 setState(() {
                                   tempnum+='8';
                                   calc += '8';
+                                  _toggleButtonState(true);
                                 });
                               },
                               child: SizedBox(
@@ -344,6 +387,7 @@ class _MyAppState extends State<MyApp> {
                                 setState(() {
                                   tempnum+='9';
                                   calc += '9';
+                                  _toggleButtonState(true);
                                 });
                               },
                               child: SizedBox(
@@ -368,13 +412,20 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ),
                             onPressed: (){
-                              setState(() {
-                                if (tempnum.isNotEmpty) {
-                                  operatorPressed();
+                                if (_isButtonEnabled){
+                                  operatorPressed('*');
+                                  setState(() => calc += '*');
                                 }
-                                _operator = '*';
-                                calc += '*';
-                              });
+                                else if (!_isButtonEnabled){
+                                  if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op))) {
+                                    arithmetic.removeLast();
+                                    setState(() {
+                                      calc = calc.substring(0, calc.length - 1);
+                                    arithmetic.add('*');
+                                    calc += '*';
+                                    });
+                                  }
+                                }
                             },
                             child: SizedBox(
                               // color: Colors.deepPurple[200],
@@ -406,6 +457,7 @@ class _MyAppState extends State<MyApp> {
                               setState(() {
                                 tempnum+='4';
                                 calc += '4';
+                                _toggleButtonState(true);
                               });
                             },
                             child: SizedBox(
@@ -433,6 +485,7 @@ class _MyAppState extends State<MyApp> {
                                 setState(() {
                                   tempnum+='5';
                                   calc += '5';
+                                  _toggleButtonState(true);
                                 });
                               },
                               child: SizedBox(
@@ -460,6 +513,7 @@ class _MyAppState extends State<MyApp> {
                                 setState(() {
                                   tempnum+='6';
                                   calc += '6';
+                                  _toggleButtonState(true);
                                 });
                               },
                               child: SizedBox(
@@ -484,13 +538,20 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ),
                             onPressed: (){
-                              setState(() {
-                                if (tempnum.isNotEmpty) {
-                                  operatorPressed();
+                                if (_isButtonEnabled){
+                                  operatorPressed('-');
+                                  setState(() => calc += '-');
                                 }
-                                _operator = '-';
-                                calc += '-';
-                              });
+                                else if (!_isButtonEnabled) {
+                                  if (arithmetic.any((op) => calc.substring(calc.length - 1, calc.length).contains(op))) {
+                                    arithmetic.removeLast();
+                                    setState(() {
+                                      calc = calc.substring(0, calc.length - 1);
+                                      arithmetic.add('-');
+                                      calc += '-';
+                                    });
+                                  }
+                                }
                             },
                             child: SizedBox(
                               // color: Colors.deepPurple[200],
@@ -522,6 +583,7 @@ class _MyAppState extends State<MyApp> {
                               setState(() {
                                 tempnum+='1';
                                 calc += '1';
+                                _toggleButtonState(true);
                               });
                             },
                             child: SizedBox(
@@ -549,6 +611,7 @@ class _MyAppState extends State<MyApp> {
                                 setState(() {
                                   tempnum+='2';
                                   calc += '2';
+                                  _toggleButtonState(true);
                                 });
                                 },
                               child: SizedBox(
@@ -576,6 +639,7 @@ class _MyAppState extends State<MyApp> {
                                 setState(() {
                                   tempnum+='3';
                                   calc += '3';
+                                  _toggleButtonState(true);
                                 });
                                 },
                               child: SizedBox(
@@ -600,13 +664,20 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ),
                             onPressed: (){
-                              setState(() {
-                                if (tempnum.isNotEmpty) {
-                                  operatorPressed();
+                                if (_isButtonEnabled){
+                                  operatorPressed('+');
+                                  setState(() => calc += '+');
                                 }
-                                _operator = '+';
-                                calc += '+';
-                              });
+                                else if (!_isButtonEnabled){
+                                  if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op))) {
+                                    arithmetic.removeLast();
+                                    setState(() {
+                                      calc = calc.substring(0, calc.length - 1);
+                                      arithmetic.add('+');
+                                      calc += '+';
+                                    });
+                                  }
+                                }
                             },
                             child: SizedBox(
                               // color: Colors.deepPurple[200],
@@ -716,22 +787,7 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ),
                             onPressed: (){
-                              if (_operator == '+') {
-                                // operatorPressed();
-                                calculatePlus();
-                              }
-                              else if (_operator == '-') {
-                                // operatorPressed();
-                                calculateMinus();
-                              }
-                              else if (_operator == '*') {
-                                // operatorPressed();
-                                calculateMultiply();
-                              }
-                              else if (_operator == '/') {
-                                // operatorPressed();
-                                calculateDivide();
-                              }
+                              equalsTo();
                             },
                             child: SizedBox(
                               // color: Colors.blue[100],
