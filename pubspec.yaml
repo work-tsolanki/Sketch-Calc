@@ -79,6 +79,11 @@ flutter:
      - family: KgNextToMeSketched
        fonts:
        - asset: fonts/KgNextToMeSketched-BOA5.ttf
+     - family: Delius Regular
+       fonts:
+        - asset: fonts/Delius-Regular.ttf
+
+
 
 
   #   - family: Trajan Pro

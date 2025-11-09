@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,6 +8,119 @@ void main() {
     )
   );
 }
+
+
+class Arithmetic extends StatelessWidget {
+  final String setOperator;
+  const Arithmetic({
+    super.key,
+    required this.setOperator,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 9.0,
+      color: Color(0xFFE7E5F4),
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        // color: Colors.blue[100],
+        width: 70,
+        height: 60,
+        // padding: EdgeInsets.only(top: 20),
+        decoration: BoxDecoration(
+            color: Color(0xFFE7E5F4),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              // Black Bottom-Right Shadow
+              BoxShadow(
+                color: Color(0xFFAFABCB),
+                blurRadius: 4,
+                spreadRadius: 4,
+                offset: Offset(2, 2),
+              ),
+              // White Top-Left Shadow
+              BoxShadow(
+                color: Color(0xFFffffff),
+                blurRadius: 4,
+                spreadRadius: 4,
+                offset: Offset(-3, -3),
+              ),
+            ]
+        ),
+        child: Center(
+          child: Text(
+            setOperator,
+            style: TextStyle(
+              color: Color(0xFF7970A2),
+              fontFamily: 'Delius Regular',
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class Numbers extends StatelessWidget {
+  final String setKey;
+  const Numbers({
+    super.key,
+    required this.setKey,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 9.0,
+      color: Color(0xFFE7E5F4),
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        // color: Colors.blue[100],
+        width: 70,
+        height: 60,
+        // padding: EdgeInsets.only(top: 20),
+        decoration: BoxDecoration(
+            color: Color(0xFFE7E5F4),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              // Black Bottom-Right Shadow
+              BoxShadow(
+                color: Color(0xFFAFABCB),
+                blurRadius: 4,
+                spreadRadius: 4,
+                offset: Offset(2, 2),
+              ),
+              // White Top-Left Shadow
+              BoxShadow(
+                color: Color(0xFFffffff),
+                blurRadius: 4,
+                spreadRadius: 4,
+                offset: Offset(-3, -3),
+              ),
+            ]
+        ),
+        child: Center(
+          child: Text(
+            setKey,
+            style: TextStyle(
+              color: Color(0xFF595377),
+              fontFamily: 'Delius Regular',
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -149,13 +261,13 @@ class _MyAppState extends State<MyApp> {
                             scrollDirection: Axis.horizontal,
                             reverse: true,
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 12.0, bottom: 6.0),
+                              padding: const EdgeInsets.only(right: 30.0, bottom: 20.0),
                               child: Text(
-                                '$calc',
+                                calc,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color(0xFF595377),
                                   fontSize: 35,
-                                  fontFamily: 'KgNextToMeSketched',
+                                  fontFamily: 'Delius Regular',
                                 ),
                               ),
                             ),
@@ -178,7 +290,7 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -194,21 +306,52 @@ class _MyAppState extends State<MyApp> {
                             result = 0;
                           });
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/ac.jpg')
+                        child: Material(
+                          elevation: 9.0,
+                          color: Color(0xFFE7E5F4),
+                          borderRadius: BorderRadius.circular(30),
+                          child: Container(
+                            // color: Colors.blue[100],
+                              width: 140,
+                              height: 60,
+                              // padding: EdgeInsets.only(top: 20),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE7E5F4),
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  // Black Bottom-Right Shadow
+                                  BoxShadow(
+                                    color: Color(0xFFAFABCB),
+                                    blurRadius: 4,
+                                    spreadRadius: 4,
+                                    offset: Offset(2, 2),
+                                  ),
+                                //  White Top-Left Shadow
+                                  BoxShadow(
+                                    color: Color(0xFFffffff),
+                                    blurRadius: 4,
+                                    spreadRadius: 4,
+                                    offset: Offset(-3, -3),
+                                  ),
+                                ]
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'AC',
+                                  style: TextStyle(
+                                    color: Color(0xFF7970A2),
+                                    fontFamily: 'Delius Regular',
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                          ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -216,66 +359,11 @@ class _MyAppState extends State<MyApp> {
                           ),
                         ),
                         onPressed: (){},
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/operation_percentage.jpg')
-                        ),
+                        child: Arithmetic(setOperator: '%'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0)
-                      ,
-                      child: TextButton(
-                        style: ButtonStyle(
-                          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.all(0),
-                          ),
-                        ),
-                        onPressed: () {
-                          // print(_operator);
-                          setState(() {
-                            if (calc.isNotEmpty || tempnum.isNotEmpty) {
-                              if (calc.isNotEmpty && tempnum.isNotEmpty){
-                                calc = calc.substring(0, calc.length - 1);
-                                // print(calc.length-1);
-                                tempnum = tempnum.substring(0, tempnum.length - 1);
-                              }
-                              else if (calc.isNotEmpty) {
-                                if (RegExp(r'[+-/*]').hasMatch(calc.substring(calc.length-1))){
-                                  arithmetic.removeLast();
-                                }
-                                calc = calc.substring(0, calc.length - 1);
-                                _toggleButtonState(true);
-                              }
-                              else if(tempnum.isNotEmpty) {
-                                tempnum = tempnum.substring(0, tempnum.length - 1);
-                              }
-                            }
-                          });
-                          // print(_operator);
-                        },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/back_arrow.jpg')
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0)
+                      padding: const EdgeInsets.only(top: 16.0)
                       ,
                       child: TextButton(
                         style: ButtonStyle(
@@ -286,7 +374,7 @@ class _MyAppState extends State<MyApp> {
                         onPressed: (){
                           if (_isButtonEnabled){
                             operatorPressed('/');
-                            setState(() => calc += '/');
+                            setState(() => calc += '÷');
                           }
                           else if (!_isButtonEnabled){
                             if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op))) {
@@ -294,22 +382,12 @@ class _MyAppState extends State<MyApp> {
                               setState(() {
                                 calc = calc.substring(0, calc.length - 1);
                                 arithmetic.add('/');
-                                calc += '/';
+                                calc += '÷';
                               });
                             }
                           }
                         },
-                        child: SizedBox(
-                          // color: Colors.deepPurple[200],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.deepPurple[200],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/operation_division.jpg')
-                        ),
+                        child: Arithmetic(setOperator: '÷'),
                       ),
                     ),
                   ],
@@ -318,7 +396,7 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -330,21 +408,11 @@ class _MyAppState extends State<MyApp> {
                           setState(() => calc += '7');
                           _toggleButtonState(true);
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/number_7.jpg')
-                        ),
+                        child: Numbers(setKey: '7'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -356,21 +424,11 @@ class _MyAppState extends State<MyApp> {
                           setState(() => calc += '8');
                           _toggleButtonState(true);
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/number_8.jpg')
-                        ),
+                        child: Numbers(setKey: '8')
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding:  WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -382,21 +440,11 @@ class _MyAppState extends State<MyApp> {
                           setState(() => calc += '9');
                           _toggleButtonState(true);
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/number_9.jpg')
-                        ),
+                        child: Numbers(setKey: '9'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -419,17 +467,7 @@ class _MyAppState extends State<MyApp> {
                             }
                           }
                         },
-                        child: SizedBox(
-                          // color: Colors.deepPurple[200],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.deepPurple[200],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/operation_multiply.jpg')
-                        ),
+                        child: Arithmetic(setOperator: '×'),
                       ),
                     ),
                   ],
@@ -438,7 +476,7 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -450,21 +488,11 @@ class _MyAppState extends State<MyApp> {
                           setState(() => calc += '4');
                           _toggleButtonState(true);
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/number_4.jpg')
-                        ),
+                        child: Numbers(setKey: '4'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -476,21 +504,11 @@ class _MyAppState extends State<MyApp> {
                           setState(() => calc += '5');
                           _toggleButtonState(true);
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/number_5.jpg')
-                        ),
+                        child: Numbers(setKey: '5'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -502,21 +520,11 @@ class _MyAppState extends State<MyApp> {
                           setState(() => calc += '6');
                           _toggleButtonState(true);
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/number_6.jpg')
-                        ),
+                        child: Numbers(setKey: '6'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -539,17 +547,7 @@ class _MyAppState extends State<MyApp> {
                             }
                           }
                         },
-                        child: SizedBox(
-                          // color: Colors.deepPurple[200],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.deepPurple[200],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/operation_minus.jpg')
-                        ),
+                        child: Arithmetic(setOperator: '-'),
                       ),
                     ),
                   ],
@@ -558,7 +556,7 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -570,21 +568,11 @@ class _MyAppState extends State<MyApp> {
                           setState(() => calc += '1');
                           _toggleButtonState(true);
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/number_1.jpg')
-                        ),
+                        child: Numbers(setKey: '1'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -596,21 +584,11 @@ class _MyAppState extends State<MyApp> {
                           setState(() => calc += '2');
                           _toggleButtonState(true);
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/number_2.png')
-                        ),
+                        child: Numbers(setKey: '2'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -622,21 +600,11 @@ class _MyAppState extends State<MyApp> {
                           setState(() => calc += '3');
                           _toggleButtonState(true);
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/number_3.jpg')
-                        ),
+                        child: Numbers(setKey: '3'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -657,17 +625,7 @@ class _MyAppState extends State<MyApp> {
                             }
                           }
                         },
-                        child: SizedBox(
-                          // color: Colors.deepPurple[200],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.deepPurple[200],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/operation_plus.jpg')
-                        ),
+                        child: Arithmetic(setOperator: '+'),
                       ),
                     ),
                   ],
@@ -676,34 +634,39 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 16.0)
+                      ,
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                             EdgeInsets.all(0),
                           ),
                         ),
-                        onPressed: (){
+                        onPressed: () {
                           setState(() {
-                            tempnum+='00';
-                            calc += '00';
+                            if (calc.isNotEmpty || tempnum.isNotEmpty) {
+                              if (calc.isNotEmpty && tempnum.isNotEmpty){
+                                calc = calc.substring(0, calc.length - 1);
+                                tempnum = tempnum.substring(0, tempnum.length - 1);
+                              }
+                              else if (calc.isNotEmpty) {
+                                if (RegExp(r'[+-/*]').hasMatch(calc.substring(calc.length-1))){
+                                  arithmetic.removeLast();
+                                }
+                                calc = calc.substring(0, calc.length - 1);
+                                _toggleButtonState(true);
+                              }
+                              else if(tempnum.isNotEmpty) {
+                                tempnum = tempnum.substring(0, tempnum.length - 1);
+                              }
+                            }
                           });
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/number_00.jpg')
-                        ),
+                        child: Arithmetic(setOperator: '⇐'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -716,21 +679,11 @@ class _MyAppState extends State<MyApp> {
                             calc += '0';
                           });
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/number_0.jpg')
-                        ),
+                        child: Numbers(setKey: '0'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -743,21 +696,11 @@ class _MyAppState extends State<MyApp> {
                             calc += '.';
                           });
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/dot.jpg')
-                        ),
+                        child: Arithmetic(setOperator: '•'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -767,17 +710,7 @@ class _MyAppState extends State<MyApp> {
                         onPressed: (){
                           equalsTo();
                         },
-                        child: SizedBox(
-                          // color: Colors.blue[100],
-                            width: 80,
-                            height: 80,
-                            // padding: EdgeInsets.only(top: 20),
-                            // decoration: BoxDecoration(
-                            //   color: Colors.blue[100],
-                            //   borderRadius: BorderRadius.circular(10),
-                            // ),
-                            child: Image.asset('c_icon/equals.jpg')
-                        ),
+                        child: Arithmetic(setOperator: '='),
                       ),
                     ),
                   ],
