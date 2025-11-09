@@ -197,10 +197,18 @@ class _MyAppState extends State<MyApp> {
         numbers.removeRange(idx, idx+2);
         numbers.insert(idx, checkResult);
       }
+      else if (arithmetic.contains('%')){
+        int idx = arithmetic.indexOf('%');
+        checkResult = (numbers[idx] / numbers[idx-1])*100;
+        arithmetic.remove('%');
+        numbers.removeAt(idx);
+        numbers.insert(idx, checkResult.abs());
+      }
     }
     calc = '';
-    tempnum = '';
-    setState(() => calc += numbers[0].toString());
+    tempnum = numbers[0].toString();
+    numbers.clear();
+    setState(() => calc += tempnum);
   }
 
   @override
@@ -211,6 +219,36 @@ class _MyAppState extends State<MyApp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            SizedBox(
+              height: 180,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:[
+                  Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Text(
+                    'Lavender Calc',
+                    style: TextStyle(
+                      color: Color(0xFF595377),
+                      fontFamily: 'Delius Regular',
+                      fontSize: 50,
+                    ),
+                                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, left: 8.0),
+                    child: Text(
+                      '💜',
+                      style: TextStyle(
+                        color: Color(0xFF595377),
+                        fontFamily: 'Delius Regular',
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                ]
+              ),
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -279,18 +317,13 @@ class _MyAppState extends State<MyApp> {
                 ),
               ],
             ),
-            const Divider(
-              color: Colors.grey,
-              indent: 40,
-              endIndent: 40,
-            ),
             Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 25.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -309,15 +342,15 @@ class _MyAppState extends State<MyApp> {
                         child: Material(
                           elevation: 9.0,
                           color: Color(0xFFE7E5F4),
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(20),
                           child: Container(
                             // color: Colors.blue[100],
-                              width: 140,
+                              width: 160,
                               height: 60,
                               // padding: EdgeInsets.only(top: 20),
                               decoration: BoxDecoration(
                                 color: Color(0xFFE7E5F4),
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(20),
                                 boxShadow: [
                                   // Black Bottom-Right Shadow
                                   BoxShadow(
@@ -351,19 +384,34 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 25.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                             EdgeInsets.all(0),
                           ),
                         ),
-                        onPressed: (){},
+                        onPressed: (){
+                          if (_isButtonEnabled){
+                            operatorPressed('%');
+                            setState(() => calc += '%');
+                          }
+                          else if (!_isButtonEnabled){
+                            if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op))) {
+                              arithmetic.removeLast();
+                              setState(() {
+                                calc = calc.substring(0, calc.length - 1);
+                                arithmetic.add('%');
+                                calc += '%';
+                              });
+                            }
+                          }
+                        },
                         child: Arithmetic(setOperator: '%'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0)
+                      padding: const EdgeInsets.only(top: 25.0)
                       ,
                       child: TextButton(
                         style: ButtonStyle(
@@ -377,7 +425,7 @@ class _MyAppState extends State<MyApp> {
                             setState(() => calc += '÷');
                           }
                           else if (!_isButtonEnabled){
-                            if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op))) {
+                            if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op)) || calc.contains('÷')) {
                               arithmetic.removeLast();
                               setState(() {
                                 calc = calc.substring(0, calc.length - 1);
@@ -396,7 +444,7 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -412,7 +460,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -428,7 +476,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding:  WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -444,7 +492,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -457,7 +505,7 @@ class _MyAppState extends State<MyApp> {
                             setState(() => calc += '*');
                           }
                           else if (!_isButtonEnabled){
-                            if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op))) {
+                            if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op)) || calc.contains('÷')) {
                               arithmetic.removeLast();
                               setState(() {
                                 calc = calc.substring(0, calc.length - 1);
@@ -476,7 +524,7 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -492,7 +540,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -508,7 +556,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -524,7 +572,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -537,7 +585,7 @@ class _MyAppState extends State<MyApp> {
                             setState(() => calc += '-');
                           }
                           else if (!_isButtonEnabled) {
-                            if (arithmetic.any((op) => calc.substring(calc.length - 1, calc.length).contains(op))) {
+                            if (arithmetic.any((op) => calc.substring(calc.length - 1, calc.length).contains(op)) || calc.contains('÷')) {
                               arithmetic.removeLast();
                               setState(() {
                                 calc = calc.substring(0, calc.length - 1);
@@ -556,7 +604,7 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -572,7 +620,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -588,7 +636,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -604,7 +652,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -617,7 +665,7 @@ class _MyAppState extends State<MyApp> {
                             setState(() => calc += '+');
                           }
                           else if (!_isButtonEnabled){
-                            if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op))) {
+                            if (arithmetic.any((op) => calc.substring(calc.length-1, calc.length).contains(op)) || calc.contains('÷')) {
                               arithmetic.removeLast();
                               calc = calc.substring(0, calc.length - 1);
                               arithmetic.add('+');
@@ -634,8 +682,7 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0, bottom: 16.0)
-                      ,
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -662,11 +709,11 @@ class _MyAppState extends State<MyApp> {
                             }
                           });
                         },
-                        child: Arithmetic(setOperator: '⇐'),
+                        child: Arithmetic(setOperator: '⇠'),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -683,7 +730,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -700,7 +747,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+                      padding: const EdgeInsets.only(top: 20.0, bottom: 16.0),
                       child: TextButton(
                         style: ButtonStyle(
                           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
@@ -716,6 +763,24 @@ class _MyAppState extends State<MyApp> {
                   ],
                 ),
               ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 8.0),
+              child: Text(
+                'Made by - Tirth',
+                style: TextStyle(
+                  color: Color(0xFF595377),
+                  fontFamily: 'Borel Regular',
+                  fontSize: 10,
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: Offset(4, 4),
+                      blurRadius: 5,
+                      color: Color(0xFF595377),
+                    ),
+                  ]
+                ),
+              ),
             ),
           ],
         ),
