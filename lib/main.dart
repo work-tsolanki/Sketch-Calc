@@ -135,6 +135,7 @@ class _MyAppState extends State<MyApp> {
   List<String> arithmetic = [];
   late var tempnum = '';
   late var calc = '';
+  late var calcRoundOff = '';
   double result = 0;
   bool _isButtonEnabled = false;
 
@@ -169,7 +170,15 @@ class _MyAppState extends State<MyApp> {
     }
 
     while (numbers.length > 1){
-      if (arithmetic.contains('/')){
+
+      if (arithmetic.contains('%')&&numbers.length==2){
+        int idx = arithmetic.indexOf('%');
+        checkResult = (numbers[idx] / 100)*numbers[idx-1];
+        arithmetic.remove('%');
+        numbers.removeAt(idx);
+        numbers.insert(idx, checkResult.abs());
+      }
+      else if (arithmetic.contains('/')){
         int idx = arithmetic.indexOf('/');
         checkResult = numbers[idx] / numbers[idx+1];
         arithmetic.remove('/');
@@ -207,8 +216,14 @@ class _MyAppState extends State<MyApp> {
     }
     calc = '';
     tempnum = numbers[0].toString();
+    if (numbers[0].toString().length>12) {
+      calcRoundOff = numbers[0].toStringAsFixed(12);
+    }
+    else{
+      calcRoundOff = tempnum;
+    }
     numbers.clear();
-    setState(() => calc += tempnum);
+    setState(() => calc += calcRoundOff);
   }
 
   @override
@@ -220,29 +235,28 @@ class _MyAppState extends State<MyApp> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SizedBox(
-              height: 180,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:[
                   Padding(
-                    padding: const EdgeInsets.all(0.0),
+                    padding: const EdgeInsets.only(bottom:50.0),
                     child: Text(
                     'Lavender Calc',
                     style: TextStyle(
                       color: Color(0xFF595377),
                       fontFamily: 'Delius Regular',
-                      fontSize: 50,
+                      fontSize: 30,
                     ),
                                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10.0, left: 8.0),
+                    padding: const EdgeInsets.only(top: 10.0,bottom: 50.0 ,left: 8.0),
                     child: Text(
                       '💜',
                       style: TextStyle(
                         color: Color(0xFF595377),
                         fontFamily: 'Delius Regular',
-                        fontSize: 30,
+                        fontSize: 20,
                       ),
                     ),
                   ),
@@ -765,7 +779,7 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(top: 8.0),
+              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
               child: Text(
                 'Made by - Tirth',
                 style: TextStyle(
@@ -776,7 +790,7 @@ class _MyAppState extends State<MyApp> {
                     Shadow(
                       offset: Offset(4, 4),
                       blurRadius: 5,
-                      color: Color(0xFF595377),
+                      color: Color(0xCC595377),
                     ),
                   ]
                 ),
